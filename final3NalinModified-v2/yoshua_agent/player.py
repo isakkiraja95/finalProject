@@ -76,6 +76,7 @@ class Team:
            TODO: feel free to edit or delete any of the code below
         """
         self.team, self.num_players = team, num_players
+        print('New Match Yoshua')
         return ['tux'] * num_players
 
     def act(self, player_state, opponent_state, soccer_state):
