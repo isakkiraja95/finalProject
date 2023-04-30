@@ -42,7 +42,7 @@ class Team:
         self.team = None
         self.num_players = None
         self.model = torch.jit.load(path.join(path.dirname(path.abspath(__file__)), 'image_jurgen_agent.pt'))
-        self.actcall = 0
+        #self.actcall = 0
 
     def new_match(self, team: int, num_players: int) -> list:
         """
@@ -58,7 +58,7 @@ class Team:
            TODO: feel free to edit or delete any of the code below
         """
         self.team, self.num_players = team, num_players
-        print('Jurgen New match')
+        #print('Jurgen New match')
         return ['sara_the_racer'] * num_players
 
     def act(self, player_state, opponent_state, soccer_state):
@@ -98,6 +98,6 @@ class Team:
             features = extract_featuresV3(pstate, soccer_state, opponent_state, self.team)
             acceleration, steer, brake = self.model(features)
             actions.append(dict(acceleration=acceleration, steer=steer, brake=brake))                        
-        print('Image Jurgen Act called', self.actcall)
-        self.actcall = self.actcall + 1
+        #print('Image Jurgen Act called', self.actcall)
+        #self.actcall = self.actcall + 1
         return actions 
