@@ -58,7 +58,7 @@ class Team:
            TODO: feel free to edit or delete any of the code below
         """
         self.team, self.num_players = team, num_players
-        #print('Jurgen New match')
+        print('New Match Image Jurgen')
         return ['sara_the_racer'] * num_players
 
     def act(self, player_state, opponent_state, soccer_state):
