@@ -20,7 +20,6 @@ def extract_peak(heatmap, max_pool_ks=7, min_score=-5, max_det=100):
             for s, l in zip(score.cpu(), loc.cpu()) if s > min_score]
             
 class Detector(torch.nn.Module):
-
     class BlockUpConv(torch.nn.Module):
         def __init__(self, c_in, c_out, stride=1, residual: bool = True):
             super().__init__()
@@ -138,16 +137,16 @@ class Detector(torch.nn.Module):
                 skip = self.skip
 
         pred = x[:, 0, :height, :width]
-        sizes = x[:, 1, :height, :width]
+        boxes = x[:, 1, :height, :width]
 
-        return pred, sizes
+        return pred, boxes
 
     def detect(self, image, max_pool_ks=7, min_score=0.2, max_det=15):
-        clss, sizes = self(image[None])  
-        clss = torch.sigmoid(clss.squeeze(0).squeeze(0)) 
-        sizes = sizes.squeeze(0)
+        heatmap, boxes = self(image[None])  
+        heatmap = torch.sigmoid(heatmap.squeeze(0).squeeze(0)) 
+        sizes = boxes.squeeze(0)
         return [(peak[0], peak[1], peak[2], (sizes[peak[2], peak[1]]).item())
-                for peak in extract_peak(clss, max_pool_ks, min_score, max_det)]
+                for peak in extract_peak(heatmap, max_pool_ks, min_score, max_det)]
 
 def save_model(model, name: str = 'det.th'):
     from torch import save
