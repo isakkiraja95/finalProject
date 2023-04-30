@@ -6,8 +6,6 @@ import time
 from PIL import Image
 from os import path
 
-#from image_agent.models import load_model, Detector
-
 GOALS = np.float32([[0, 75], [0, -75]])
 
 LOST_STATUS_STEPS = 10
