@@ -117,7 +117,7 @@ class Team:
             
             kart_velocity = np.linalg.norm(player_info['kart']['velocity'])
 
-            # try and detect if goal scored so we can reset (only needs to be done for one of the players)
+            # If Goal Scored, Reset the current state
             if index == 0 and kart_velocity < 1:
                 if self.timevalidity[index] == 0:
                     self.timevalidity[index] = self.step
@@ -190,21 +190,17 @@ class Team:
                 else:
                     brake = False
                     acceleration = 0
-            # waitTime actions
             elif self.waitTime[index] > 0:
                 self.waitTime[index] -= 1
                 brake = False
                 acceleration = 0.5
                 target_location = opp_goal_line_degree / TURN_ANGLE
-            # recovery actions
             else:
-                # if not a goal keep backing up
                 if own_goal_line_distance > 10:
                     target_location = own_goal_line_degree / TURN_ANGLE
                     acceleration = 0
                     brake = True
                     self.backtrace[index] -= 1
-                # if at goal then waitTime on reversing
                 else:
                     self.waitTime[index] = 10
                     target_location = opp_goal_line_degree / TURN_ANGLE
@@ -212,7 +208,7 @@ class Team:
                     brake = False
                     self.backtrace[index] = 0
 
-            # set steering/drift
+            # Update Steering based on target location
             steer = np.clip(target_location * 20, -1, 1)
             
             #Enable drift if the destination is 70% more deviated angle
