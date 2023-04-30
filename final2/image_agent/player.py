@@ -28,7 +28,7 @@ class Team:
         """
         self.team = None
         self.num_players = None
-        self.actcall = 0
+        #self.actcall = 0
         self.model = load_model('det.th').to(device)
         self.transform = torchvision.transforms.Compose([torchvision.transforms.Resize((128, 128)),
                                                          torchvision.transforms.ToTensor()])
@@ -99,8 +99,8 @@ class Team:
                  steer:        float -1..1 steering angle
         """
         # TODO: Change me. I'm just cruising straight
-        print('Act called', self.actcall)
-        self.actcall = self.actcall + 1
+        #print('Act called', self.actcall)
+        #self.actcall = self.actcall + 1
         
         result = []
 		
